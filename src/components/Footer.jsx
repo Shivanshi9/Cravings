@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white mt-10">
       <div className="max-w-7xl mx-auto px-6 py-8 text-center">
-        <h2 className="text-2xl font-bold mb-3">🍔 Cravings</h2>
+        <h2 className="text-2xl font-bold mb-3"> Cravings</h2>
 
         <p className="text-gray-300 mb-4">
           Delicious food delivered to your doorstep.

@@ -2,7 +2,7 @@ const Home = () => {
   return (
     <div className="min-h-[80vh] flex flex-col justify-center items-center bg-orange-50">
       <h1 className="text-5xl font-bold text-orange-600 mb-4">
-        Welcome to Cravings 🍔
+        Welcome to Cravings 
       </h1>
 
       <p className="text-lg text-gray-600 mb-6">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -18,73 +18,123 @@ const Register = () => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const userData = {
+      FullName: formData.FullName,
+      email: formData.email,
+      phone: formData.phone,
+      DOB: formData.DOB,
+      gender: formData.gender,
+      password: formData.password,
+    };
+
+    console.log("User Registered:");
+    console.log(JSON.stringify(userData, null, 2));
+
+    // alert("Registration Successful!");
+
+    setFormData({
+      FullName: "",
+      email: "",
+      phone: "",
+      DOB: "",
+      gender: "",
+      password: "",
+      confirmPassword: "",
+    });
+  };
+
   return (
-    <div className="flex justify-center items-center py-10 bg-gray-100">
-      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-xl">
+    <div className="min-h-screen flex items-center justify-center bg-orange-50 py-10 px-4">
+      <div className="w-full max-w-xl bg-white shadow-lg rounded-xl p-8">
         <h2 className="text-3xl font-bold text-center text-orange-500 mb-6">
           Create Account
         </h2>
 
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
             name="FullName"
             placeholder="Full Name"
-            className="w-full border p-3 rounded-lg"
+            value={formData.FullName}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg"
+            required
           />
 
           <input
             type="email"
             name="email"
-            placeholder="Email"
-            className="w-full border p-3 rounded-lg"
+            placeholder="Email Address"
+            value={formData.email}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg"
+            required
           />
 
           <input
             type="tel"
             name="phone"
             placeholder="Phone Number"
-            className="w-full border p-3 rounded-lg"
+            value={formData.phone}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg"
+            required
           />
 
           <input
             type="date"
             name="DOB"
-            className="w-full border p-3 rounded-lg"
+            value={formData.DOB}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg"
+            required
           />
 
           <select
             name="gender"
-            className="w-full border p-3 rounded-lg"
+            value={formData.gender}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg"
+            required
           >
-            <option>Select Gender</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
           </select>
 
           <input
             type="password"
             name="password"
             placeholder="Password"
-            className="w-full border p-3 rounded-lg"
+            value={formData.password}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg"
+            required
           />
 
           <input
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
-            className="w-full border p-3 rounded-lg"
+            value={formData.confirmPassword}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg"
+            required
           />
 
-          <button className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
+          <button
+            type="submit"
+            className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition"
+          >
             Register
           </button>
         </form>
