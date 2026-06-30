@@ -7,12 +7,15 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Contactus from "./pages/Contactus";
+import UserDashboard from "./pages/dashboard/UserDashboard";
+import {Toaster} from "react-hot-toast";
 
 const App = () => {
   return (
     <>
       <div className="min-h-screen flex flex-col">
         <BrowserRouter>
+        <Toaster />
           <Header />
           <main className="grow">
             <Routes>
@@ -21,6 +24,9 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/contact" element={<Contactus />} />
+
+              {/* //Dashboard routes */}
+              <Route path="/user/dashboard" element={<UserDashboard/>} />
             </Routes>
           </main>
           <Footer />

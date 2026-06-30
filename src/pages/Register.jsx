@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import api from "../config/api.config";
+import toast from "react-hot-toast";
+
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -12,17 +15,17 @@ const Register = () => {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords do not match!");
       return;
     }
 
@@ -38,22 +41,29 @@ const Register = () => {
     console.log("User Registered:");
     console.log(JSON.stringify(userData, null, 2));
 
-    // alert("Registration Successful!");
+    try {
+      const res = await api.post("/auth/register", userData);
 
-    setFormData({
-      FullName: "",
-      email: "",
-      phone: "",
-      DOB: "",
-      gender: "",
-      password: "",
-      confirmPassword: "",
-    });
+      toast.success(res.data.message);
+
+      setFormData({
+        FullName: "",
+        email: "",
+        phone: "",
+        DOB: "",
+        gender: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (error) {
+      console.log(error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message || "Registration Failed");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-orange-50 py-10 px-4">
-      <div className="w-full max-w-xl bg-white shadow-lg rounded-xl p-8">
+      <div className="w-full max-w-xl bg-white shadow-xl rounded-xl p-8">
         <h2 className="text-3xl font-bold text-center text-orange-500 mb-6">
           Create Account
         </h2>
@@ -65,7 +75,7 @@ const Register = () => {
             placeholder="Full Name"
             value={formData.FullName}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-3 rounded-lg"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
 
@@ -75,7 +85,7 @@ const Register = () => {
             placeholder="Email Address"
             value={formData.email}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-3 rounded-lg"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
 
@@ -85,7 +95,7 @@ const Register = () => {
             placeholder="Phone Number"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-3 rounded-lg"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
 
@@ -94,7 +104,7 @@ const Register = () => {
             name="DOB"
             value={formData.DOB}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-3 rounded-lg"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
 
@@ -102,7 +112,7 @@ const Register = () => {
             name="gender"
             value={formData.gender}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-3 rounded-lg"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           >
             <option value="">Select Gender</option>
@@ -117,7 +127,7 @@ const Register = () => {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-3 rounded-lg"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
 
@@ -127,7 +137,7 @@ const Register = () => {
             placeholder="Confirm Password"
             value={formData.confirmPassword}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-3 rounded-lg"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
 

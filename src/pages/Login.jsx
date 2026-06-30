@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import api from "../config/api.config";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -13,34 +15,67 @@ const Login = () => {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log("Login Data:");
+    console.log(JSON.stringify(user, null, 2));
+
+    try {
+      const res = await api.post("/auth/login", user);
+      toast.success(res.data.message);
+      console.log(res.data.data);
+
+      setUser({
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      
+      console.log(error.response?.data?.message || error.message);
+     toast.error(error.response?.data?.message || "Login Failed");
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-[80vh] bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-orange-50">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+
         <h2 className="text-3xl font-bold text-center text-orange-500 mb-6">
           Login
         </h2>
 
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
+
           <input
             type="email"
             name="email"
             placeholder="Email"
-            className="w-full border p-3 rounded-lg"
+            value={user.email}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+            required
           />
 
           <input
             type="password"
             name="password"
             placeholder="Password"
-            className="w-full border p-3 rounded-lg"
+            value={user.password}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+            required
           />
 
-          <button className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
+          <button
+            type="submit"
+            className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition"
+          >
             Login
           </button>
+
         </form>
+
       </div>
     </div>
   );
