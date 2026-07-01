@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import api from "../config/api.config";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "",
