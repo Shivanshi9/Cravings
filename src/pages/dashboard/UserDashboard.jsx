@@ -26,15 +26,10 @@ const UserDashboard = () => {
       </div>
 
       <div className="w-5/6 border border-green-500">
-
         {active === "Overview" && <Overview userData={userData} />}
-
         {active === "Orders" && <Orders />}
-
         {active === "Wishlist" && <Wishlist />}
-
         {active === "Settings" && <Settings userData={userData} />}
-
       </div>
 
     </div>
