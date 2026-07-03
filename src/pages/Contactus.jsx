@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import api from "../config/api.config";
 import toast from "react-hot-toast";
 
-
 const ContactUs = () => {
+
   const [formData, setFormData] = useState({
     FullName: "",
     phone: "",
@@ -57,7 +57,7 @@ const ContactUs = () => {
             placeholder="Full Name"
             value={formData.FullName}
             onChange={handleChange}
-             className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
 
@@ -67,7 +67,7 @@ const ContactUs = () => {
             placeholder="Phone"
             value={formData.phone}
             onChange={handleChange}
-             className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
 

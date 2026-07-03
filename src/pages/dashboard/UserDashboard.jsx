@@ -1,27 +1,44 @@
 import React, { useEffect, useState } from "react";
+import Sidebar from "../../components/userDashboard/Sidebar";
+import Overview from "../../components/userDashboard/Overview";
+import Orders from "../../components/userDashboard/Order";
+import Settings from "../../components/userDashboard/Seetings";
+import Wishlist from "../../components/userDashboard/Wishlist";
 
 const UserDashboard = () => {
-  const [userData, setUserData] = useState("");
+  const [active, setActive] = useState("Overview");
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    setUserData(JSON.parse(sessionStorage.getItem("UserData")));
+    const data = JSON.parse(sessionStorage.getItem("UserData"));
+    setUserData(data);
   }, []);
 
-
   return (
-  <>
-      <div>Welcome Back!! {userData.FullName}</div>
-      <div>Welcome Back!! {userData.email}</div>
-      <div>Welcome Back!! {userData.phone}</div>
-      <div className="w-24 h-24 rounded-full overflow-hidden">
-        <img
-          src={userData.photo}
-          alt=""
-          className="w-full h-full object-cover"
+    <div className="flex h-[92vh]">
+
+      <div className="w-1/6 border border-red-500">
+        <Sidebar
+          active={active}
+          setActive={setActive}
+          userData={userData}
         />
       </div>
-    </>
-  )
-}
 
-export default UserDashboard
+      <div className="w-5/6 border border-green-500">
+
+        {active === "Overview" && <Overview userData={userData} />}
+
+        {active === "Orders" && <Orders />}
+
+        {active === "Wishlist" && <Wishlist />}
+
+        {active === "Settings" && <Settings userData={userData} />}
+
+      </div>
+
+    </div>
+  );
+};
+
+export default UserDashboard;

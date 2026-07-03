@@ -1,20 +1,24 @@
 import React, { useState } from "react";
-import api from "../config/api.config";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import api from "../config/api.config";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-   const navigate = useNavigate();
-  const [user, setUser] = useState({
+  const navigate = useNavigate();
+
+  const { setUser, setIsLogin } = useAuth();
+
+  const [user, setUserData] = useState({
     email: "",
     password: "",
   });
 
   const handleChange = (e) => {
-    setUser({
-      ...user,
+    setUserData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -25,17 +29,31 @@ const Login = () => {
 
     try {
       const res = await api.post("/auth/login", user);
-      toast.success(res.data.message);
-      console.log(res.data.data);
 
-      setUser({
+      toast.success(res.data.message);
+
+      // Save user in session storage
+      sessionStorage.setItem(
+        "UserData",
+        JSON.stringify(res.data.data)
+      );
+
+      // Update Auth Context
+      setUser(res.data.data);
+      setIsLogin(true);
+
+      // Clear form
+      setUserData({
         email: "",
         password: "",
       });
+
+      // Redirect
+      navigate("/user/dashboard");
+
     } catch (error) {
-      
       console.log(error.response?.data?.message || error.message);
-     toast.error(error.response?.data?.message || "Login Failed");
+      toast.error(error.response?.data?.message || "Login Failed");
     }
   };
 
@@ -77,7 +95,6 @@ const Login = () => {
           </button>
 
         </form>
-
       </div>
     </div>
   );
