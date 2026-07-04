@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import api from "../config/api.config";
 
 const Header = () => {
   const navigate = useNavigate();

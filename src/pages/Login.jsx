@@ -24,33 +24,33 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Login Data:");
-    console.log(JSON.stringify(user, null, 2));
+    const res = await api.post("/auth/login", user);
+
+    toast.success(res.data.message);
+
+    sessionStorage.setItem("UserData", JSON.stringify(res.data.data));
+
+    setUser(res.data.data);
+    setIsLogin(true);
+
+    navigate("/user/dashboard");
 
     try {
       const res = await api.post("/auth/login", user);
 
       toast.success(res.data.message);
 
-      // Save user in session storage
-      sessionStorage.setItem(
-        "UserData",
-        JSON.stringify(res.data.data)
-      );
+      sessionStorage.setItem("UserData", JSON.stringify(res.data.data));
 
-      // Update Auth Context
       setUser(res.data.data);
       setIsLogin(true);
 
-      // Clear form
       setUserData({
         email: "",
         password: "",
       });
 
-      // Redirect
       navigate("/user/dashboard");
-
     } catch (error) {
       console.log(error.response?.data?.message || error.message);
       toast.error(error.response?.data?.message || "Login Failed");
@@ -60,13 +60,11 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-orange-50">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-
         <h2 className="text-3xl font-bold text-center text-orange-500 mb-6">
           Login
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <input
             type="email"
             name="email"
@@ -93,7 +91,6 @@ const Login = () => {
           >
             Login
           </button>
-
         </form>
       </div>
     </div>
