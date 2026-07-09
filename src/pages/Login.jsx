@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 const Login = () => {
   const navigate = useNavigate();
 
-  const { setUser, setIsLogin } = useAuth();
+  const { setUser, setIsLogin, setRole } = useAuth();
 
   const [user, setUserData] = useState({
     email: "",
@@ -45,12 +45,16 @@ const Login = () => {
       setUser(res.data.data);
       setIsLogin(true);
 
-      setUserData({
-        email: "",
-        password: "",
-      });
+      setRole(res.data.data.userType);
 
-      navigate("/user/dashboard");
+      res.data.data.userType === "restaurant" &&
+        navigate("/restaurant-dashboard");
+
+      res.data.data.userType === "rider" && navigate("/rider-dashboard");
+
+      res.data.data.userType === "admin" && navigate("/admin-dashboard");
+
+      res.data.data.userType === "customer" && navigate("/customer-dashboard");
     } catch (error) {
       console.log(error.response?.data?.message || error.message);
       toast.error(error.response?.data?.message || "Login Failed");

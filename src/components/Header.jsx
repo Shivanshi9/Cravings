@@ -6,7 +6,21 @@ import api from "../config/api.config";
 const Header = () => {
   const navigate = useNavigate();
 
-  const { user, setUser, isLogin, setIsLogin } = useAuth();
+  const { user, setUser, isLogin, setIsLogin, setRole } = useAuth();
+
+  const handleNavigate = () => {
+    //console.log("Handle Navigate", role);
+
+    if (role === "restaurant") {
+      navigate("/restaurant-dashboard");
+    } else if (role === "rider") {
+      navigate("/rider-dashboard");
+    } else if (role === "admin") {
+      navigate("/admin-dashboard");
+    } else {
+      navigate("/customer-dashboard");
+    }
+  };
 
   const handleLogout = () => {
     sessionStorage.removeItem("UserData");
