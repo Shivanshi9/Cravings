@@ -11,7 +11,7 @@ const About = () => {
         quality, speed, and customer satisfaction.
       </p>
     </div>
-  );
+  );  
 };
 
 export default About;
