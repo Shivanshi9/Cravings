@@ -35,7 +35,7 @@ const Header = () => {
   return (
     <header className="bg-orange-800 shadow-md">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-white">Cravings</h1>
+        <h1 className="text-2xl font-boldre text-white">Cravings</h1>
 
         <nav className="flex items-center gap-6">
           <Link to="/" className="text-white hover:text-orange-100 transition">
